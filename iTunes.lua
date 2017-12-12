@@ -1,3 +1,10 @@
+playlist =
+{{"", ""}, {"", ""},
+{"Music 1", "Music1"},
+{"Music 2", "Music2"},
+{"Music 3", "Music3"},
+{"", ""}, {"", ""}}
+
 -- TaraniTunes
 -- http://github.com/GilDev/TaraniTunes
 -- By GilDev
@@ -82,43 +89,6 @@ local function init()
 	prevSongSwitchId   = getFieldInfo("ls" .. prevSongLogicalSwitch).id
 	randomSongSwitchId = getFieldInfo("ls" .. randomSongLogicalSwitch).id
 
-	-- Build playlist
-	playlist = {{"", ""}, {"", ""}}
-	playlistFile = io.open(playlistFilename, "r")
-
-	if (playlistFile == nil) then
-		error({"\"" .. playlistFilename .. "\"", "file not found, please", "read the \"README.md\"", "file for installation", "instructions."})
-		return
-	end
-	
-	repeat
-		songName = ""
-		songFilename = ""
-
-		-- Determine song name
-		char = ""
-		repeat
-			songName = songName .. char
-			char = io.read(playlistFile, 1)
-		until char == ":"
-
-		-- Determine song filename
-		char = ""
-		repeat
-			songFilename = songFilename .. char
-			char = io.read(playlistFile, 1)
-		until char == "\n" or char == "\r" or char == ""
-		if char == "\r" then io.read(playlistFile, 1) end -- Discard newline character for Windows ending
-
-		playlist[#playlist + 1] = {songName, songFilename} -- table.insert() doesn't work
-
-	until char == ""
-
-	io.close(playlistFile)
-
-	-- These blank starting and ending values are used when selecting top or bottom songs
-	playlist[#playlist + 1] = {"", ""}
-	playlist[#playlist + 1] = {"", ""}
 end
 
 nextSongSwitchPressed   = false;
