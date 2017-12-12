@@ -1,0 +1,16 @@
+newPlayFile="luaPlayList_$(hexdump -e '/1 "%02x"' -n3 < /dev/urandom).txt"
+
+fileExtension=".wav"
+
+files=*.mp3
+
+for f in $files
+do
+  echo $f
+  fileLength=$(ffmpeg -i "$f" 2>&1 | grep "Duration" | cut -d ' ' -f 4 | sed s/,// | sed 's@\..*@@g' | awk '{ split($1, A, ":"); split(A[3], B, "."); print 3600*A[1] + 60*A[2] + B[1] }')
+  echo $fileLength
+  newFileName="0$(cat /dev/urandom | tr -cd 'a-f0-9' | head -c 5)"
+  shortFileName=$(echo $f | cut -c6-30)
+  echo "{\"${shortFileName}\", \"$newFileName\", \"$fileLength\"},">>$newPlayFile
+  ffmpeg -i "$f" -acodec pcm_s16le -ac 1 -ar 16000 $newFileName$fileExtension
+done
