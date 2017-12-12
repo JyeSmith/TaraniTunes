@@ -34,7 +34,8 @@ local prevSongLogicalSwitch   = 63 -- Logical switch that will set the current s
 local randomSongLogicalSwitch = 64 -- Logical switch that will set the current song to a random one
 
 playlist = 
-{{"", ""}, {"", ""},
+{{"", "", ""},
+{"", "", ""},
 {"Spiderbait - Calypso", "0calyp", "122"},
 {"X Gonna Give It To Ya", "0xgona", "24"},
 {"Grinspoon - Champion", "0champ", "163"},
@@ -123,7 +124,8 @@ playlist =
 {"Even - 'Black Umbrella'.m", "036b19", "205"},
 {"Foo Fighters - Baker stre", "097cbd", "348"},
 {"The Superjesus - Saturati", "0a0732", "245"},
-{"", ""}, {"", ""}}
+{"", "", ""},
+{"", "", ""}}
 
 -- DON'T EDIT BELOW THIS LINE --
 
