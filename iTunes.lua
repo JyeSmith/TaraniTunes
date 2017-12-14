@@ -5,39 +5,10 @@
 
 -- CONFIG --
 
-local specialFunctionId = 30 -- This special function will be reserved: 1 for SF1, 2 for SF2…
-
--- You NEED to use logical switches to manipulate TaraniTunes.
-
--- WARNING: If you use trims for changing songs for example (and I recommand you do),
--- you need to deactivate the "real" trim functions of the model, to do this,
--- go into "FLIGHT MODES" configuration, go to each flight mode you use for your model
--- and set the throttle "Trims" value (the third if you use the default AETR mode) to "--".
-
--- Here's how to setup the play switch to SD centered:
--- LOGICAL SWITCH  L61
--- Func   OR
--- V1     SD-
--- V2     SD-
--- Then set playSongLogicalSwitch to 61 below.
-
--- Here's how to setup the next song switch to throttle trim down:
--- LOGICAL SWITCH  L62
--- Func   OR
--- V1     tTd
--- V2     tTd
--- Then set nextSongLogicalSwitch to 62 below.
-
-local playSongLogicalSwitch   = 61 -- Logical switch that will play the current song
-local nextSongLogicalSwitch   = 62 -- Logical switch that will set the current song to the next one
-local prevSongLogicalSwitch   = 63 -- Logical switch that will set the current song to the previous one
-local randomSongLogicalSwitch = 64 -- Logical switch that will set the current song to a random one
-
 playlist = 
-{{"", "", ""},
-{"", "", ""},
-{"Spiderbait - Calypso", "0calyp", "122"},
+{{"", ""}, {"", ""},
 {"X Gonna Give It To Ya", "0xgona", "24"},
+{"Spiderbait - Calypso", "0calyp", "122"},
 {"Grinspoon - Champion", "0champ", "163"},
 {"Grinspoon - Just Ace", "0justa", "109"},
 {"Flume - On Top", "0ontop", "232"},
@@ -124,144 +95,83 @@ playlist =
 {"Even - 'Black Umbrella'.m", "036b19", "205"},
 {"Foo Fighters - Baker stre", "097cbd", "348"},
 {"The Superjesus - Saturati", "0a0732", "245"},
-{"", "", ""},
-{"", "", ""}}
+{"", ""}, {"", ""}}
 
 -- DON'T EDIT BELOW THIS LINE --
 
+local specialFunctionId = 30 -- This special function will be reserved: 1 for SF1, 2 for SF2…
+
 local errorOccured = false
 local screenUpdate = true
-local nextScreenUpdate = false
+local nextScreenUpdate = true
 
 local playingSong = 3
 local selection = 3
+local currentSwitchChoice = 'NA'
+local toggleWheelPresded = false
 
-local songChanged = false
-local resetDone = false
-
-local nextRandomSongTime = 0
+local timeUntilNextSong = 0
 
 local function error(strings)
 	errorStrings = strings
 	errorOccured = true
 end
 
-function playSong()
-	model.setCustomFunction(
-		specialFunctionId,
-		{
-			switch = playSongSwitchId,
-			func = 16,
-			name = playlist[playingSong][2]
-		}
-	)
+function songStop()
+	model.setCustomFunction(specialFunctionId,{switch=7}) 
 end
 
-function resetSong()
-	model.setCustomFunction(
-		specialFunctionId,
-		{
-			switch = -playSongSwitchId
-		}
-	)
-end
-
-function getPlaySongSwitchId(Switch)
-	if LCD_W == 212 then -- if Taranis X9D
-		return 50 + Switch
-	else -- if Taranis Q X7
-		return 38 + Switch
-	end
+function songChanged()
+	model.setCustomFunction(specialFunctionId,{switch=7}) 
+	model.setCustomFunction(specialFunctionId,{switch=playSongSwitchId; func=16; name=playlist[playingSong][2]}) 
+	timeUntilNextSong = getTime() + playlist[playingSong][3]*100
 end
 
 local function init()
 	-- Calculate indexes
 	specialFunctionId  = specialFunctionId - 1 -- SF1 is at index 0 and so on
 
-	playSongSwitchId = getPlaySongSwitchId(playSongLogicalSwitch)
-
-	nextSongSwitchId   = getFieldInfo("ls" .. nextSongLogicalSwitch).id
-	prevSongSwitchId   = getFieldInfo("ls" .. prevSongLogicalSwitch).id
-	randomSongSwitchId = getFieldInfo("ls" .. randomSongLogicalSwitch).id
-	
-	nextScreenUpdate = true
-	screenUpdate = true
-	songChanged = true
+	currentSwitchChoice = getValue('sc')
 end
-
-nextSongSwitchPressed   = false;
-prevSongSwitchPressed   = false;
-randomSongSwitchPressed = false;
 
 local function background()
 
-	if getValue(randomSongSwitchId) > 0 then
-		playSongSwitchId = getPlaySongSwitchId(randomSongLogicalSwitch)
-	else
-		playSongSwitchId = getPlaySongSwitchId(playSongLogicalSwitch)
-		playSong()
+	if getValue('sc') < 0 then
+		screenUpdate = true
+		timeUntilNextSong = getTime()
+	elseif getValue('sc') == 0 then
+		playSongSwitchId = 8
+		if currentSwitchChoice ~= getValue('sc') then timeUntilNextSong = 0 end
+		currentSwitchChoice = getValue('sc')
+	elseif getValue('sc') > 0 then
+		playSongSwitchId = 9
+		if currentSwitchChoice ~= getValue('sc') then timeUntilNextSong = 0 end
+		currentSwitchChoice = getValue('sc')
 	end
 
-	if resetDone then
-		playSong()
-		resetDone = false
-	end
-	
-	if songChanged then
-		resetSong()
-		songChanged = false
-		resetDone = true
-		nextRandomSongTime = getTime() + playlist[playingSong][3]*100
-	end
-
-		-- Next song
-	if getValue(nextSongSwitchId) > 0 then
-		if not nextSongSwitchPressed then
-			nextSongSwitchPressed = true
-			nextScreenUpdate = true
-			songChanged = true
-			screenUpdate = true
-			if playingSong < #playlist - 2 then
-				playingSong = playingSong + 1
-			else
-				playingSong = 3
-			end
-		end
-	else
-		nextSongSwitchPressed = false
-	end
-
-	-- Previous song
-	if getValue(prevSongSwitchId) > 0 then
-		if not prevSongSwitchPressed then
-			prevSongSwitchPressed = true
-			nextScreenUpdate = true
-			songChanged = true
-			screenUpdate = true
-			if playingSong > 3 then
-				playingSong = playingSong - 1
-			else
-				playingSong = #playlist - 2
-			end
-		end
-	else
-		prevSongSwitchPressed = false
-	end
-
+	-- Play song
+	if getValue('sc') == 0 and getTime() > timeUntilNextSong then
+		playingSong = playingSong + 1
+		songStop()
+		songChanged()
+		screenUpdate = true
+		nextScreenUpdate = true
 	-- Random song
-
-	if getValue(randomSongSwitchId) > 0 and getTime() > nextRandomSongTime then
-		if not randomSongSwitchPressed then
-			randomSongSwitchPressed = true
-			playingSong = math.random (3, #playlist - 2)
-			songChanged = true
-			screenUpdate = true
-			nextScreenUpdate = true
-		end
-	else
-		randomSongSwitchPressed = false
+	elseif getValue('sc') > 0 and getTime() > timeUntilNextSong then
+		playingSong = math.random (3, #playlist - 2)
+		songChanged()
+		screenUpdate = true
+		nextScreenUpdate = true
+	-- Toggle Wheel 
+	elseif toggleWheelPresded then
+		songChanged()
+		toggleWheelPresded = false
 	end
 
+end
+
+function drawDot(x, y)
+	lcd.drawLine(x, y, x, y, SOLID, FORCE)
 end
 
 local function run(event)
@@ -282,17 +192,17 @@ local function run(event)
 		screenUpdate = true
 	elseif event == EVT_ROT_BREAK or event == EVT_ENTER_BREAK then -- Play selected song
 		playingSong = selection
-		songChanged = true
 		screenUpdate = true
+		toggleWheelPresded = true
+		songStop()
 	elseif nextScreenUpdate then
 		selection = playingSong
 		nextScreenUpdate = false
 	end
 
 	-- Song time remaining
-	local timeRemaining = math.floor((nextRandomSongTime - getTime())/100)
-	--lcd.drawText(LCD_W - 27, 9, timeRemaining .. "s", SMLSIZE)
-	lcd.drawTimer(LCD_W - 27, 9, timeRemaining, SMLSIZE)
+	local timeRemaining = math.ceil((timeUntilNextSong - getTime())/100)
+	lcd.drawTimer(LCD_W - 35, 3, timeRemaining, MIDSIZE)
 
 	-- DRAWING --
 	if screenUpdate or event == 191 then -- 191 is the event code when entering the telemetry screen
@@ -300,15 +210,49 @@ local function run(event)
 
 		lcd.clear();
 
-		-- Title
-		lcd.drawText(1, 1, "TaraniTunes", MIDSIZE)
-		-- Sorry Gil, I needed the space :(
-		--lcd.drawText(LCD_W - 19, 1, "By", SMLSIZE)
-		--lcd.drawText(LCD_W - 27, 9, "GilDev", SMLSIZE)
-		lcd.drawTimer(LCD_W - 27, 9, timeRemaining, SMLSIZE)
+		-- Symbols
 
-		-- Separator
-		lcd.drawLine(0, 16, LCD_W - 1, 16, SOLID, FORCE)
+		-- Stop
+		for i=4,13 do lcd.drawLine(9, i, 18, i, SOLID, FORCE) end
+
+		-- Play
+		for i=4,13 do lcd.drawLine(24, i, 32, 8, SOLID, FORCE) end
+
+		-- Random
+
+		randomMatrix = 
+		{
+		{0,0,0,0,0,0,0,1,0,0},
+		{1,1,0,1,1,1,1,1,1,0},
+		{1,1,0,1,1,1,1,1,1,1},
+		{1,1,0,1,1,0,0,1,1,0},
+		{0,0,0,1,1,0,0,1,0,0},
+		{0,0,0,1,1,0,0,1,0,0},
+		{1,1,1,1,1,0,1,1,1,0},
+		{1,1,1,1,1,0,1,1,1,1},
+		{1,1,1,1,1,0,1,1,1,0},
+		{0,0,0,0,0,0,0,1,0,0}
+		}
+
+		for x=1,10 do 
+			for y=1,10 do
+				if randomMatrix[x][y] == 1 then drawDot(y+38, x+3) end
+			end
+		end
+
+		-- Draw Square
+		local squareOffSet = 0
+		if getValue('sc') < 0	then squareOffSet = 5 end
+		if getValue('sc') == 0	then squareOffSet = 20 end
+		if getValue('sc') > 0	then squareOffSet = 35 end
+
+		lcd.drawLine(squareOffSet+2, 2, squareOffSet+2, 15, SOLID, FORCE)
+		lcd.drawLine(squareOffSet+2, 15, squareOffSet+15, 15, SOLID, FORCE)
+		lcd.drawLine(squareOffSet+15, 15, squareOffSet+15, 2, SOLID, FORCE)
+		lcd.drawLine(squareOffSet+15, 2, squareOffSet+2, 2, SOLID, FORCE)
+
+		-- Time
+		lcd.drawTimer(LCD_W - 35, 3, timeRemaining, MIDSIZE)
 
 		-- Print error
 		if errorOccured then
@@ -320,11 +264,11 @@ local function run(event)
 			return
 		end
 
-		-- Now playing
-		lcd.drawText(1, 18, string.char(62) .. playlist[playingSong][1])
+		-- Now playing black backround for songs that dont span the display
+		for i=17,25 do lcd.drawLine(0, i, LCD_W - 1, i, SOLID, FORCE) end
 
-		-- Separator
-		lcd.drawLine(0, 26, LCD_W - 1, 26, DOTTED, FORCE)
+		-- Now playing
+		lcd.drawText(1, 18, playlist[playingSong][1], INVERS)
 
 		-- Song selector
 		lcd.drawText(1, 28, playlist[selection - 2][1], SMLSIZE)
@@ -332,6 +276,12 @@ local function run(event)
 		lcd.drawText(1, 42, string.char(126) .. playlist[selection][1], SMLSIZE)
 		lcd.drawText(3, 49, playlist[selection + 1][1], SMLSIZE)
 		lcd.drawText(1, 56, playlist[selection + 2][1], SMLSIZE)
+		
+		-- Draw side bar
+		lcd.drawLine(	LCD_W-1, 26+math.floor((LCD_H-31)*(selection-2)/(#playlist-4)), 
+				LCD_W-1, 26+math.floor((LCD_H-31)*(selection-2)/(#playlist-4))+4, SOLID, FORCE)
+		lcd.drawLine(	LCD_W-2, 26+math.floor((LCD_H-31)*(selection-2)/(#playlist-4)), 
+				LCD_W-2, 26+math.floor((LCD_H-31)*(selection-2)/(#playlist-4))+4, SOLID, FORCE)
 
 	end
 end
