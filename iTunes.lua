@@ -5,6 +5,9 @@
 
 -- CONFIG --
 
+--SCRIPT_HOME = "/SCRIPTS/BF"
+--loadScript(SCRIPT_HOME.."/protocols.lua")
+
 playlist = {
 {"", "", ""},
 {"", "", ""},
@@ -96,6 +99,93 @@ playlist = {
 {"Even - 'Black Umbrella'.m", "036b19", "205"},
 {"Foo Fighters - Baker stre", "097cbd", "348"},
 {"The Superjesus - Saturati", "0a0732", "245"},
+{"Spiderbait - Buy Me A Pon", "0f9a53", "101"},
+{"Tool - Stinkfist.mp3", "08ff69", "310"},
+{"Ben Folds Five - Undergro", "0d4fbe", "254"},
+{"Bush - Glycerine.mp3", "086e7e", "259"},
+{"Powderfinger - Pick You U", "06e649", "261"},
+{"Allen Ginsberg Ballad Of ", "0b7b35", "248"},
+{"El Scorcho - Weezer [Lyri", "00e16d", "243"},
+{"You're Gorgeous - Babybir", "0e363d", "225"},
+{"1. 311-Down.mp3", "0d2f64", "178"},
+{"Underworld - Born Slippy ", "09885f", "700"},
+{"The Smashing Pumpkins - 1", "075c6f", "261"},
+{"Scooby Snacks - Fun Lovin", "0b483d", "206"},
+{"Regurgitator - Kong Foo S", "0c31e6", "185"},
+{"Powderfinger - D.A.F.mp3", "079e14", "210"},
+{"Bush - Swallowed [lyric] ", "0b0ce2", "294"},
+{"Foo Fighters - Down In Th", "0cacc5", "250"},
+{"Regurgitator - I sucked a", "0e3f79", "155"},
+{"Everclear - Santa Monica.", "0dc966", "199"},
+{"No Doubt - Just A Girl.mp", "077757", "206"},
+{"The Chemical Brothers - S", "0dc304", "328"},
+{"Cake - The Distance.mp3", "0892fb", "183"},
+{"Beck - Devils Haircut.mp3", "05c80a", "194"},
+{"The Fauves-Self Abuser (H", "0a6328", "171"},
+{"Skin - Manah Manah Video.", "0a2169", "97"},
+{"Powderfinger - Living Typ", "0f354a", "205"},
+{"2pac feat Dr.Dre - Califo", "02a18e", "334"},
+{"Tracy Bonham - Mother Mot", "099cd7", "180"},
+{"Fugees - Killing Me Softl", "09cb65", "292"},
+{"Primitive Radio Gods - St", "0eca48", "331"},
+{"Jamiroquai Virtual Insani", "068227", "341"},
+{"Bush-Comedown.mp3", "0878b0", "326"},
+{"Garbage - Milk (Wicked mi", "07180f", "214"},
+{"Whoever You Are - Geggy T", "0b27ca", "274"},
+{"Fini Scad - Coppertone.mp", "04204b", "221"},
+{"Beck - Where It's At LYRI", "0708e8", "331"},
+{"Nirvana - Aneurysm.mp3", "08640b", "276"},
+{"Pearl Jam- Hail Hail (wit", "027cd0", "232"},
+{"Nada Surf Popular.mp3", "0b45a2", "218"},
+{"Definition of Sound - Pas", "088179", "254"},
+{"Mach 5.mp3", "04c345", "196"},
+{"Garbage-I'm only happy wh", "0220d2", "236"},
+{"Metallica - Until It Slee", "050bb0", "269"},
+{"Bjork - Hyperballad (Exte", "083f09", "335"},
+{"If I Could Talk I'd Tell ", "00097e", "166"},
+{"The Smashing Pumpkins - T", "05016b", "259"},
+{"Eels - Susan's House.mp3", "00c7f5", "240"},
+{"Rebecca's Empire - So Rud", "0987bc", "220"},
+{"Everclear - Heartspark Do", "0bc34a", "172"},
+{"Tumbleweed - Silver Lizar", "01af03", "182"},
+{"Hey Dude - Kula Shaker {L", "0e157a", "255"},
+{"Def FX - I'll be your maj", "057c7e", "196"},
+{"Metallica - Hero of the D", "022aab", "261"},
+{"Bad religion - Punk rock ", "098fbe", "141"},
+{"Angelique Kidjo - Wombo L", "0c66a0", "216"},
+{"Goldfinger - Here In Your", "03738d", "190"},
+{"Frente! What's come over ", "02be07", "286"},
+{"Larry Mullen & Adam Clayt", "06f89e", "207"},
+{"INSURGE - speculator (Int", "00a94c", "360"},
+{"Deadstar - Don't It Get Y", "0705b1", "213"},
+{"Pulp - Disco 2000 (motiv8", "01645e", "450"},
+{"frenzal rhomb.punch in th", "036417", "105"},
+{"Hole - Gold Dust Woman.mp", "017adb", "309"},
+{"Midnight Oil - Surf's up ", "08f2a0", "182"},
+{"Spacehog - In The Meantim", "046450", "299"},
+{"Soundgarden - Burden In M", "0c6c7b", "299"},
+{"OMC - How Bizarre.mp3", "057b05", "229"},
+{"The Whitlams - I Make Ham", "07fe28", "214"},
+{"You Am I - Soldiers.mp3", "08fc6d", "154"},
+{"The Superjesus - Shut My ", "02e16e", "231"},
+{"Luscious Jackson Naked Ey", "0e08d4", "283"},
+{"Hoodoo Gurus Waking Up Ti", "09cfe4", "174"},
+{"You Am I - Good Mornin'.m", "0f4fdf", "251"},
+{"ash-goldfinger.mp3", "04c792", "272"},
+{"Neneh Cherry - Woman.mp3", "02d77c", "270"},
+{"R.E.M. - E-bow the letter", "0f293a", "326"},
+{"Hunting Party - Grooving.", "0259f0", "218"},
+{"Snout - Cromagnonman.mp3", "0486bb", "148"},
+{"Set the Controls for The ", "01cd45", "340"},
+{"The Mavis's - Thunder.mp3", "0c6518", "207"},
+{"Skunk Anansie - All I Wan", "0e9fdd", "232"},
+{"Pearl Jam - Mankind.mp3", "07eb29", "208"},
+{"Creep by Frank Bennett.mp", "0107c3", "181"},
+{"Matthew Trapnell - Ella's", "07ca0b", "356"},
+{"AC-DC - Hail Caesar.mp3", "0f6bbc", "315"},
+{"Tori Amos - Professional ", "0a7187", "451"},
+{"Republica - Ready To Go.m", "0c3d5e", "302"},
+{"Ben Harper - Gold to Me.m", "058b1b", "300"},
 {"", "", ""},
 {"", "", ""}
 }
@@ -125,7 +215,7 @@ function songStop()
 end
 
 function songChanged()
-	model.setCustomFunction(specialFunctionId,{switch=7}) 
+	songStop()
 	model.setCustomFunction(specialFunctionId,{switch=playSongSwitchId; func=16; name=playlist[playingSong][2]}) 
 	timeUntilNextSong = getTime() + playlist[playingSong][3]*100
 end
@@ -139,36 +229,50 @@ end
 
 local function background()
 
-	if getValue('sc') < 0 then
-		screenUpdate = true
-		timeUntilNextSong = getTime()
-	elseif getValue('sc') == 0 then
-		playSongSwitchId = 8
-		if currentSwitchChoice ~= getValue('sc') then timeUntilNextSong = 0 end
-		currentSwitchChoice = getValue('sc')
-	elseif getValue('sc') > 0 then
-		playSongSwitchId = 9
-		if currentSwitchChoice ~= getValue('sc') then timeUntilNextSong = 0 end
-		currentSwitchChoice = getValue('sc')
-	end
-
-	-- Play song
-	if getValue('sc') == 0 and getTime() > timeUntilNextSong then
-		playingSong = playingSong + 1
-		songStop()
-		songChanged()
-		screenUpdate = true
-		nextScreenUpdate = true
-	-- Random song
-	elseif getValue('sc') > 0 and getTime() > timeUntilNextSong then
-		playingSong = math.random (3, #playlist - 2)
-		songChanged()
-		screenUpdate = true
-		nextScreenUpdate = true
 	-- Toggle Wheel 
-	elseif toggleWheelPresded then
+	if toggleWheelPresded then
 		songChanged()
 		toggleWheelPresded = false
+
+	-- Stop song
+	elseif getValue('sc') < 0 then
+		screenUpdate = true
+		timeUntilNextSong = getTime()
+
+	-- Play song
+	elseif getValue('sc') == 0 then
+		playSongSwitchId = 8
+
+		if currentSwitchChoice ~= getValue('sc') then 
+			timeUntilNextSong = 0 
+			currentSwitchChoice = getValue('sc')
+		end
+
+		if getTime() >= timeUntilNextSong then
+			playingSong = playingSong + 1
+			songStop()
+			songChanged()
+			screenUpdate = true
+			nextScreenUpdate = true
+		end
+
+	-- Random song
+	elseif getValue('sc') > 0 then
+		playSongSwitchId = 9
+
+		if currentSwitchChoice ~= getValue('sc') then
+			timeUntilNextSong = 0
+			currentSwitchChoice = getValue('sc')
+		end
+
+		if getTime() >= timeUntilNextSong then
+			playingSong = math.random (3, #playlist - 2)
+			songStop()
+			songChanged()
+			screenUpdate = true
+			nextScreenUpdate = true
+		end
+
 	end
 
 end
@@ -219,10 +323,27 @@ local function run(event)
 		for i=4,13 do lcd.drawLine(9, i, 18, i, SOLID, FORCE) end
 
 		-- Play
-		for i=4,13 do lcd.drawLine(24, i, 32, 8, SOLID, FORCE) end
+		playMatrix = 
+		{
+		{1,1,0,0,0,0,0,0,0,0},
+		{1,1,1,1,0,0,0,0,0,0},
+		{1,1,1,1,1,1,0,0,0,0},
+		{1,1,1,1,1,1,1,1,0,0},
+		{1,1,1,1,1,1,1,1,1,1},
+		{1,1,1,1,1,1,1,1,1,1},
+		{1,1,1,1,1,1,1,1,0,0},
+		{1,1,1,1,1,1,0,0,0,0},
+		{1,1,1,1,0,0,0,0,0,0},
+		{1,1,0,0,0,0,0,0,0,0}
+		}
+
+		for x=1,10 do 
+			for y=1,10 do
+				if playMatrix[x][y] == 1 then drawDot(y+23, x+3) end
+			end
+		end
 
 		-- Random
-
 		randomMatrix = 
 		{
 		{0,0,0,0,0,0,0,1,0,0},
