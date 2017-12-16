@@ -5,9 +5,6 @@
 
 -- CONFIG --
 
---SCRIPT_HOME = "/SCRIPTS/BF"
---loadScript(SCRIPT_HOME.."/protocols.lua")
-
 playlist = {
 {"", "", ""},
 {"", "", ""},
