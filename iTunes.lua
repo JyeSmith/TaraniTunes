@@ -7,10 +7,7 @@
 
 -- DON'T EDIT BELOW THIS LINE --
 
-f = assert (loadScript ("playlist.lua"))
---f = assert (loadScript ("/SOUNDS/playlist.lua"))
---f = assert (loadfile ("playlist.lua"))
-f () -- execute function now
+loadScript ("/SOUNDS/playlist.lua")()
 
 local specialFunctionId = 30 -- This special function will be reserved: 1 for SF1, 2 for SF2…
 
