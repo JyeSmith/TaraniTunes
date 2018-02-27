@@ -9,6 +9,14 @@
 
 loadScript ("/SOUNDS/playlist.lua")()
 
+-- Add menu for multiple playlists
+-- local playlists = {
+-- 	{playlist1},
+-- 	{playlist2},
+-- 	{playlist3}
+-- }
+-- locat playlist = playlists[1]
+
 local specialFunctionId = 30 -- This special function will be reserved: 1 for SF1, 2 for SF2…
 
 local errorOccured = false
@@ -83,6 +91,10 @@ local function background()
 		end
 
 		if getTime() >= timeUntilNextSong then
+			-- math.random isnt very random. Below needs testing.
+			-- https://www.lua.org/pil/18.html
+			-- https://opentx.gitbooks.io/opentx-2-2-lua-reference-guide/general/getTime.html
+			-- math.randomseed(getTime())
 			playingSong = math.random (3, #playlist - 2)
 			songStop()
 			songChanged()
